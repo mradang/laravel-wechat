@@ -2,11 +2,10 @@
 
 namespace mradang\LaravelWechat\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use mradang\LaravelWechat\Services\WeChatService;
 
-class WeChatController extends BaseController
+class WeChatController extends Controller
 {
     // 获取微信认证地址
     public function login(Request $request)
@@ -34,13 +33,11 @@ class WeChatController extends BaseController
         // https://www.easywechat.com/docs/4.1/official-account/oauth#heading-h3-6
         $user = $officialAccount->oauth->user();
 
-        $user = [
-            'id' => $user->id,
-            'openid' => $user->getId(),
-            'nickname' => $user->getNickname(),
-            'avatar' => $user->getAvatar(),
-        ];
-        return WeChatService::makeToken($user);
+        return WeChatService::makeToken(
+            $user->getId(),
+            $user->getNickname(),
+            $user->getAvatar()
+        );
     }
 
     // 客户端 JSAPI 配置
@@ -51,6 +48,11 @@ class WeChatController extends BaseController
             'apis' => 'required|array',
             'debug' => 'boolean',
         ]);
+
+        $allow_sites = explode('|', config('mradang_laravel_wechat.sites'));
+        if (!in_array($request->url, $allow_sites)) {
+            return;
+        }
 
         $officialAccount = app('wechat.official_account.default');
         $officialAccount->jssdk->setUrl($request->url);
