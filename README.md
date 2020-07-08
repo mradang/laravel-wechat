@@ -29,9 +29,9 @@ LARAVEL_WECHAT_USER_MODEL=\App\Models\User
 ## 添加的内容
 
 ### 添加的路由
-- post /api/wechat/login 获取微信认证地址
-- get /api/wechat/auth 根据用户 code 认证微信用户
-- post /api/wechat/config 客户端 JSAPI 配置
+- post /api/extra/wechat/login 获取微信认证地址
+- get /api/extra/wechat/auth 根据用户 code 认证微信用户
+- post /api/extra/wechat/config 客户端 JSAPI 配置
 
 ### 添加的路由中间件
 1. wechat 微信认证
