@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "laravel/framework": "~6.0",
+        "laravel/framework": "~6.0|~7.0",
         "overtrue/laravel-wechat": "^5.0",
         "firebase/php-jwt": "^5.0"
     },
